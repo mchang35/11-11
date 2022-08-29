@@ -1,1 +1,30 @@
+body {
+    font-size: 70px;
+}
+
+.center {
+    margin: auto;
+}
+
+button {
+    color: black;
+    border-radius: 4px;
+    font-size: 35px;
+}
+
+.start {
+    background-color: green;
+}
+
+.start:hover {
+    background-color: lightgreen;
+}
+
+.stop {
+    background-color: red;
+}
+
+.stop:hover {
+    background-color: pink;
+}
 
