@@ -1,6 +1,9 @@
 var start_str = "START";
 var stop_str = "STOP";
-var timer_on = false;
+
+let [milliseconds,second] = [0,0];
+let timerRef = document.querySelector('.mainTime');
+let int = null;
 
 function button_pressed() {
     button = document.getElementById("button");
@@ -19,42 +22,27 @@ function start(button) {
     button.classList.remove("start");
     button.classList.add("stop");
 
-    second = document.getElementById("second");
-    millisecond = document.getElementById("millisecond");
-
-    // start the timer
-    timer_on = true;
-    let sec = 0;
-    let ms = 0;
-    while (timer_on) {
-        setTimeout(function() {
-            ms += 1;
-            if (ms >= 1000) {
-                ms = 0;
-                sec += 1
-            }
-            if (sec >= 60) {
-                timer_on = false;
-                time_out();
-            }
-            // display the times
-            sec_str = String(sec);
-            if (len(sec_str) == 1) {
-                sec_str = "0" + sec_str;
-            }
-
-            ms_str = String(ms);
-            if (len(ms_str) == 1) {
-                ms_str = "00" + ms_str;
-            } else if (len(ms_str) == 2) {
-                ms_str = "0" + ms_str;
-            }
-
-            second.innerHTML = sec_str;
-            millisecond.innerHTML = ms_str;
-        }, 1); // wait 1 ms between runs
-
+    if(int!==null){
+        clearInterval(int);
     }
+    int = setInterval(mainTime,10);
+}
+
+function mainTime(){
+    milliseconds+=10;
+    if(milliseconds == 1000){
+        milliseconds = 0;
+        second++;
+        if(second == 60){
+            clearInterval(int);
+            time_out();
+        }
+    }
+
+    let s = second < 10 ? "0" + second : second;
+    let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+
+    timerRef.innerHTML = `${s} : ${ms}`;
 }
 
 function time_out() {
@@ -64,7 +52,8 @@ function time_out() {
 function stop() {
     console.log("stop was pressed");
     // stop the timer
-    timer_on = false;
+    // timer_on = false;
+    clearInterval(int);
 
     // wait 2 seconds
     
@@ -74,5 +63,5 @@ function stop() {
 }
 
 function try_again() {
-
+    // set everything back to 00:00
 }
